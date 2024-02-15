@@ -7,12 +7,13 @@ router.post("/tweet", (req, res) => {
   const newTweet = new Tweet({
     content: req.body.content,
     author: req.body.author,
-    hashtags: req.body.hashtags,
+   
   });
   newTweet
     .save()
-    .then(() => {
-      res.json({ result: true });
+    .then((data) => {
+      console.log(data)
+      res.json({ result: true, tweet: data});
     })
     .catch((error) => {
       console.error("Error saving tweet:", error);
