@@ -48,31 +48,3 @@ router.delete("/tweet/:id", async (req, res) => {
 });
 
 module.exports = router;
-
-// Route POST pour créer un nouveau tweet
-router.post("/tweet", async (req, res) => {
-  // Crée une nouvelle instance de Tweet en utilisant les données reçues dans req.body
-  const newTweet = new Tweet({
-    content: req.body.content,
-    author: req.body.author,
-    hashtags: req.body.hashtags,
-    likes: req.body.likes, // Ceci est optionnel, car les likes pourraient être ajoutés plus tard
-  });
-
-  // Sauvegarde le nouveau tweet dans la base de données
-  const savedTweet = await newTweet.save();
-  // Envoie le tweet sauvegardé au client avec un statut 201 (Created)
-  res.status(301).json(savedTweet);
-});
-
-router.post("/tweet", async (req, res) => {
-  const newTweet = new Tweet({
-    content: req.body.content,
-    author: req.body.author,
-    hashtags: req.body.hashtags,
-    likes: req.body.likes,
-  });
-
-  const savedTweet = await newTweet.save();
-  res.status(301).json(savedTweet);
-});
