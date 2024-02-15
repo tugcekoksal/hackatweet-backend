@@ -30,6 +30,9 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  token: {
+    type: String,
+  },
 });
 
 const User = mongoose.model("User", userSchema);

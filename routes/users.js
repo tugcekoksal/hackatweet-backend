@@ -8,19 +8,19 @@ const bcrypt = require("bcrypt");
 
 //
 router.post("/signup", (req, res) => {
-  if (!checkBody(req.body, ["username", "password"])) {
+  if (!checkBody(req.body, ["username", "passwordHash"])) {
     res.json({ result: false, error: "Missing or empty fields" });
     return;
   }
 
   User.findOne({ username: req.body.username }).then((data) => {
     if (data === null) {
-      const hash = bcrypt.hashSync(req.body.password, 10);
+      const hash = bcrypt.hashSync(req.body.passwordHash, 10);
       const newUser = new User({
         firstname: req.body.firstname,
         username: req.body.username,
         email: req.body.email,
-        password: hash,
+        passwordHash: hash,
         token: uid2(32),
       });
       newUser.save().then((newDoc) => {
@@ -40,7 +40,7 @@ router.post("/signin", (req, res) => {
   }
 
   User.findOne({ username: req.body.username }).then((data) => {
-    if (data && bcrypt.compareSync(req.body.password, data.password)) {
+    if (data && bcrypt.compareSync(req.body.password, data.passwordHash)) {
       res.json({ result: true, token: data.token });
     } else {
       res.json({ result: false, error: "User not found or wrong password" });
