@@ -3,17 +3,17 @@ var router = express.Router();
 
 const Tweet = require("../models/Tweet");
 
-router.post("/tweet", (req, res) => {
+router.post("/", (req, res) => {
   const newTweet = new Tweet({
     content: req.body.content,
-    author: req.body.author,
-   
+    username: req.body.username,
+    firstname: req.body.firstname,
+    hashtags: req.body.hashtags,
   });
   newTweet
     .save()
     .then((data) => {
-      console.log(data)
-      res.json({ result: true, tweet: data});
+      res.json({ result: true,tweet:data });
     })
     .catch((error) => {
       console.error("Error saving tweet:", error);
@@ -21,13 +21,13 @@ router.post("/tweet", (req, res) => {
     });
 });
 
-router.get("/tweets", async (req, res) => {
+router.get("/", async (req, res) => {
   const tweets = await Tweet.find().populate("content").populate("hashtags");
   res.json(tweets);
 });
 
 //delete
-router.delete("/tweet/:id", async (req, res) => {
+router.delete("/:id", async (req, res) => {
   try {
     // Récupère l'ID du tweet à supprimer depuis les paramètres de l'URL
     const tweetId = req.params.id;

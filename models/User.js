@@ -9,23 +9,19 @@ const userSchema = new mongoose.Schema({
   username: {
     type: String,
     required: true,
-    unique: true,
+    // unique: true,
     trim: true,
   },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-    trim: true,
-  },
-  passwordHash: {
+
+  password: {
     type: String,
     required: true,
   },
-  photo: {
-    type: String,
-    default: "",
-  },
+  // photo: {
+  //   type: String,
+  //   default: "",
+  // },
+
   createdAt: {
     type: Date,
     default: Date.now,
